@@ -18,6 +18,6 @@ RUN set -ex; \
         docker-cli \
     ;
 
-COPY cron-exec /usr/local/bin/
+COPY kiwi-cron /usr/local/bin/
 
-CMD [ "cron-exec" ]
+CMD [ "kiwi-cron" ]
