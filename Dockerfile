@@ -2,10 +2,22 @@ FROM alpine:latest
 
 RUN set -ex; \
     \
-    mkdir /etc/periodic/5min; \
-    chmod 755 /etc/periodic/5min;
+    mkdir -pm 755 /kiwi-cron; \
+    cd /kiwi-cron; \
+    mkdir -pm 755 \
+        every/5_minutes \
+        every/15_minutes \
+        hourly \
+        daily \
+        weekly \
+        monthly \
+        yearly \
+    ; \
+    \
+    apk --no-cache add \
+        docker-cli \
+    ;
 
-ENTRYPOINT [ "/usr/sbin/crond" ]
-CMD [ "-fd", "8" ]
+COPY cron-exec /usr/local/bin/
 
-COPY crontab /var/spool/cron/crontabs/root
+CMD [ "cron-exec" ]

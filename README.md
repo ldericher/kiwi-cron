@@ -8,11 +8,18 @@ Simple cron-jobs  for [`kiwi-scp`](https://github.com/ldericher/kiwi-scp)
 
 ## Quick start
 
-kiwi-cron comes with a pre-loaded cron daemon for periodic jobs. Just drop your executables into the relevant directory under `/etc/periodic/` and that's it.
+kiwi-cron comes with a pre-configured cron daemon for periodic jobs. 
+Just drop your scripts into the relevant directory under `/kiwi-cron/` and that's it.
 
-- `/etc/periodic/5min` -- is run every 5 minutes
-- `/etc/periodic/15min` -- is run every 15 minutes
-- `/etc/periodic/hourly` -- is run every full hour
-- `/etc/periodic/daily` -- is run every day at 2am
-- `/etc/periodic/weekly` -- is run every saturday at 3am
-- `/etc/periodic/month` -- is run on the first day of every month at 5am
+- `/kiwi-cron/hourly` – is run every full hour
+- `/kiwi-cron/daily` – is run every day at 2 am
+- `/kiwi-cron/weekly` – is run every saturday at 3 am
+- `/kiwi-cron/monthly` – is run on the first day of every month at 5 am
+- `/kiwi-cron/yearly` and `/kiwi-cron/annually` – is run on every January 1st at 12 am
+
+## `/kiwi-cron/every` directory
+
+You can use directories like `/kiwi-cron/every/5_minutes` to run scripts every 5 minutes. 
+`kiwi-cron` automatically picks up on that format and generates cron schedules for you.
+
+You can define schedules to be run every N minutes, hours, days, or months that way.
