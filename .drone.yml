@@ -6,7 +6,7 @@ steps:
 - name: docker
   image: plugins/docker
   settings:
-    repo: ldericher/kiwi-cron
+    repo: yavook/kiwi-cron
     auto_tag: true
     username:
       from_secret: DOCKER_USERNAME
