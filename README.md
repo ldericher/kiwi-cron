@@ -1,10 +1,10 @@
 # kiwi-cron
 
-[![Build Status](https://github.drone.yavook.de/api/badges/ldericher/kiwi-cron/status.svg)](https://github.drone.yavook.de/ldericher/kiwi-cron)
+[![Build Status](https://github.drone.yavook.de/api/badges/yavook/kiwi-cron/status.svg)](https://github.drone.yavook.de/yavook/kiwi-cron)
 
 > `kiwi` - simple, consistent, powerful
 
-Simple cron-jobs  for [`kiwi-scp`](https://github.com/ldericher/kiwi-scp)
+Simple cron-jobs  for [`kiwi-scp`](https://github.com/yavook/kiwi-scp)
 
 ## Quick start
 
