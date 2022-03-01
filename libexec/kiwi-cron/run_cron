@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# set timezone
+export TZ="${TZ:-Etc/UTC}"
+ln -sf "/usr/share/zoneinfo/${TZ}" "/etc/localtime"
+
 # check for CLI options
 while getopts ':n' rc_optarg; do
   case "${rc_optarg}" in

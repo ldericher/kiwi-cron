@@ -1,5 +1,7 @@
 FROM alpine:latest
 
+ENV TZ=Etc/UTC
+
 RUN set -ex; \
     \
     mkdir -pm 755 /kiwi-cron; \
@@ -16,6 +18,7 @@ RUN set -ex; \
     \
     apk --no-cache add \
         docker-cli \
+        tzdata \
     ;
 
 COPY bin /usr/local/bin/

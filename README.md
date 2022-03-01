@@ -28,6 +28,12 @@ For each subdirectory, a random valid cron schedule is generated, so that:
 
 Cron schedules are regenerated once on each startup, only for directories that have files.
 
+## Time Zones
+
+`kiwi-cron` images include the `tzdata` package and automatically handle `/etc/localtime` on startup. By default, "Etc/UTC" is set as the container time zone.
+
+To use a different time zone, change the container environment variable `TZ` to your liking, e.g. "Europe/Berlin".
+
 ## Finer granularity: The `/kiwi-cron/every` directory
 
 Directories like `/kiwi-cron/every/5_minutes` will run scripts every 5 minutes. 
