@@ -18,6 +18,7 @@ RUN set -ex; \
         docker-cli \
     ;
 
-COPY kiwi-cron /usr/local/bin/
+COPY bin /usr/local/bin/
+COPY libexec /usr/local/libexec/
 
 CMD [ "kiwi-cron" ]

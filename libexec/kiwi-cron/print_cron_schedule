@@ -1,0 +1,11 @@
+#!/bin/sh
+
+pcs_minute="${1}"
+pcs_hour="${2}"
+pcs_day="${3}"
+pcs_month="${4}"
+pcs_weekday="${5}"
+pcs_command="${6}"
+
+printf '%-8s%-8s%-8s%-8s%-8s%s\n' \
+  "${pcs_minute}" "${pcs_hour}" "${pcs_day}" "${pcs_month}" "${pcs_weekday}" "${pcs_command}"
