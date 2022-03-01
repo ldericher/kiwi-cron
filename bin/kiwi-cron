@@ -1,5 +1,5 @@
 #!/bin/sh
 
-# replace crontab, run crond
-/usr/local/libexec/kiwi-cron/schedule_dirs | crontab -
-exec crond -fd 8
+exec /usr/local/libexec/kiwi-cron/run_cron \
+  "${@}" \
+  /usr/local/libexec/kiwi-cron/schedule_dirs

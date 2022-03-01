@@ -1,8 +1,5 @@
 #!/bin/sh
 
-this_script="$( readlink -f "${0}" )"
-this_dir="${this_script%/*}"
-
 cs_every="${1:-1}"
 cs_units="${2}"
 cs_command="${3}"
@@ -35,28 +32,22 @@ cs_rand_weekday=$(( (6 + RANDOM % 2) % 7 ))
 cs_rand_month=$(( RANDOM % 2 + 1 ))
 
 case "${cs_units}" in
-minute)
-  "${this_dir}/print_cron_schedule" \
-    "*${cs_every}" "*" "*" "*" "*" "${cs_command}" 
-  ;;
-hour)
-  "${this_dir}/print_cron_schedule" \
-    "${cs_rand_min}" "*${cs_every}" "*" "*" "*" "${cs_command}" 
-  ;;
-day)
-  "${this_dir}/print_cron_schedule" \
-    "${cs_rand_min}" "${cs_rand_hour}" "*${cs_every}" "*" "*" "${cs_command}" 
-  ;;
-week)
-  "${this_dir}/print_cron_schedule" \
-    "${cs_rand_min}" "${cs_rand_hour}" "*" "*" "${cs_rand_weekday}" "${cs_command}" 
-  ;;
-month)
-  "${this_dir}/print_cron_schedule" \
-    "${cs_rand_min}" "${cs_rand_hour}" "${cs_rand_day}" "*${cs_every}" "*" "${cs_command}" 
-  ;;
-year)
-  "${this_dir}/print_cron_schedule" \
-    "${cs_rand_min}" "${cs_rand_hour}" "${cs_rand_day}" "${cs_rand_month}" "*" "${cs_command}" 
-  ;;
+  minute)
+    echo "*${cs_every}" "*" "*" "*" "*" "${cs_command}" 
+    ;;
+  hour)
+    echo "${cs_rand_min}" "*${cs_every}" "*" "*" "*" "${cs_command}" 
+    ;;
+  day)
+    echo "${cs_rand_min}" "${cs_rand_hour}" "*${cs_every}" "*" "*" "${cs_command}" 
+    ;;
+  week)
+    echo "${cs_rand_min}" "${cs_rand_hour}" "*" "*" "${cs_rand_weekday}" "${cs_command}" 
+    ;;
+  month)
+    echo "${cs_rand_min}" "${cs_rand_hour}" "${cs_rand_day}" "*${cs_every}" "*" "${cs_command}" 
+    ;;
+  year)
+    echo "${cs_rand_min}" "${cs_rand_hour}" "${cs_rand_day}" "${cs_rand_month}" "*" "${cs_command}" 
+    ;;
 esac
