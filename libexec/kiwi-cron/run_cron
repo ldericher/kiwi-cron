@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# check for CLI options
+while getopts ':n' rc_optarg; do
+  case "${rc_optarg}" in
+    n)
+      rc_dry_run="yes"
+      ;;
+
+    *)
+      echo "Invalid option: -${OPTARG}."
+      exit 2
+  esac
+done
+
+shift "$(( OPTIND - 1 ))"
+
+# CLI arguments
+rc_executable="${1}"
+
+
+if [ -n "${rc_dry_run}" ]; then
+  # verbose, dry run
+  set -x
+
+  "${rc_executable}" \
+    | /usr/local/libexec/kiwi-cron/print_crontab
+
+  exit 0
+fi
+
+# replace crontab
+"${rc_executable}" \
+  | /usr/local/libexec/kiwi-cron/print_crontab \
+  | crontab -
+
+# hand over to crond
+exec crond -fd 8
+
+exit 0
