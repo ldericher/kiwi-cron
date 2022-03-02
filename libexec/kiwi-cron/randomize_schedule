@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# shellcheck disable=SC3028 # RANDOM is defined in alpine's /bin/sh
+
+read -r rs_minute rs_hour rs_day rs_month rs_weekday rs_command
+
+[ "${rs_minute}" = "R" ] && \
+  rs_minute=$(( RANDOM % 60 ))
+
+[ "${rs_hour}" = "R" ] && \
+  rs_hour=$(( (21 + RANDOM % 6) % 24 ))   # prefer nighttime
+  # rs_hour=$(( RANDOM % 24 ))            # don't prefer nighttime
+
+[ "${rs_day}" = "R" ] && \
+  rs_day=$(( RANDOM % 28 + 1 ))           # don't mess with February 31st
+
+[ "${rs_month}" = "R" ] && \
+  rs_month=$(( RANDOM % 2 + 1 ))          # prefer January & February
+  # rs_month=$(( RANDOM % 12 + 1 ))       # don't prefer January & February
+
+[ "${rs_weekday}" = "R" ] && \
+  rs_weekday=$(( (6 + RANDOM % 2) % 7 ))  # prefer weekends
+  # rs_weekday=$(( RANDOM % 7 ))          # don't prefer weekends
+
+echo "${rs_minute} ${rs_hour} ${rs_day} ${rs_month} ${rs_weekday} ${rs_command}"

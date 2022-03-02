@@ -4,50 +4,29 @@ cs_every="${1:-1}"
 cs_units="${2}"
 cs_command="${3}"
 
-if [ "${cs_every}" -eq 1 ]; then
-  cs_every=""
+if [ "${cs_every}" = "1" ]; then
+  cs_every="*"
 else
-  cs_every="/${cs_every}"
+  cs_every="*/${cs_every}"
 fi
-
-# generate valid random schedule values
-# generally, "nighttime" and "weekend" will be preferred.
-
-# shellcheck disable=SC3028 # RANDOM is defined in alpine's /bin/sh
-cs_rand_min=$(( RANDOM % 60 ))
-
-# shellcheck disable=SC3028
-# cs_rand_hour=$(( RANDOM % 24 ))
-cs_rand_hour=$(( (21 + RANDOM % 7) % 24 ))
-
-# shellcheck disable=SC3028
-cs_rand_day=$(( RANDOM % 31 + 1 ))
-
-# shellcheck disable=SC3028
-# cs_rand_weekday=$(( RANDOM % 7 ))
-cs_rand_weekday=$(( (6 + RANDOM % 2) % 7 ))
-
-# shellcheck disable=SC3028
-# cs_rand_month=$(( RANDOM % 12 + 1 ))
-cs_rand_month=$(( RANDOM % 2 + 1 ))
 
 case "${cs_units}" in
   minute)
-    echo "*${cs_every}" "*" "*" "*" "*" "${cs_command}" 
+    echo "${cs_every} * * * * ${cs_command}" 
     ;;
   hour)
-    echo "${cs_rand_min}" "*${cs_every}" "*" "*" "*" "${cs_command}" 
+    echo "R ${cs_every} * * * ${cs_command}" 
     ;;
   day)
-    echo "${cs_rand_min}" "${cs_rand_hour}" "*${cs_every}" "*" "*" "${cs_command}" 
+    echo "R R ${cs_every} * * ${cs_command}" 
     ;;
   week)
-    echo "${cs_rand_min}" "${cs_rand_hour}" "*" "*" "${cs_rand_weekday}" "${cs_command}" 
+    echo "R R * * R ${cs_command}" 
     ;;
   month)
-    echo "${cs_rand_min}" "${cs_rand_hour}" "${cs_rand_day}" "*${cs_every}" "*" "${cs_command}" 
+    echo "R R R ${cs_every} * ${cs_command}" 
     ;;
   year)
-    echo "${cs_rand_min}" "${cs_rand_hour}" "${cs_rand_day}" "${cs_rand_month}" "*" "${cs_command}" 
+    echo "R R R R * ${cs_command}" 
     ;;
 esac

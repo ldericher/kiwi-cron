@@ -1,4 +1,5 @@
 FROM alpine:latest
+LABEL maintainer="jmm@yavook.de"
 
 ENV TZ=Etc/UTC
 

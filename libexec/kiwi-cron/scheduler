@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# shellcheck disable=SC3001 # process substitution are defined in alpine's /bin/sh
+
 this_script="$( readlink -f "${0}" )"
 this_dir="${this_script%/*}"
 
@@ -42,7 +44,7 @@ schedule_dirs="$(
 )"
 
 for schedule_dir in ${schedule_dirs}; do
-  # ignore if no files
+  # ignore dirs without files
   if dir_has_no_files "${schedule_dir}"; then
     continue
   fi
@@ -52,7 +54,9 @@ for schedule_dir in ${schedule_dirs}; do
   units="${dir_name%ly}"
   units="$( dir_to_unit "${units}" )"
 
-  "${this_dir}/create_schedule" "1" "${units}" "run-parts '${schedule_dir}'"
+  "${this_dir}/create_schedule" \
+    "1" "${units}" "run-parts '${schedule_dir}'" \
+    | "${this_dir}/randomize_schedule"
 done
 
 # check dirs in "/kiwi-cron/every" directory
@@ -61,16 +65,29 @@ every_schedule_dirs="$(
 )"
 
 for schedule_dir in ${every_schedule_dirs}; do
-  # ignore if no files
+  # ignore dirs without files
   if dir_has_no_files "${schedule_dir}"; then
     continue
   fi
 
   # infer schedule params by directory name
   dir_name="${schedule_dir##*/}"
-  every="$( echo "${dir_name}" | awk -F_ '{print $1}' )"
-  units="$( echo "${dir_name}" | awk -F_ '{print $2}' )"
+  case "${dir_name}" in
+    *_*) # looks like: every/5_minutes
+      read -r every units < \
+        <( echo "${dir_name}" | tr '_' ' ' )
+      ;;
+
+    *) # probably looks like: every/day
+      every="1"
+      units="${dir_name}"
+      ;;
+  esac
+
+  # remove trailing "s" if present
   units="${units%s}"
 
-  "${this_dir}/create_schedule" "${every}" "${units}" "run-parts '${schedule_dir}'"
+  "${this_dir}/create_schedule" \
+    "${every}" "${units}" "run-parts '${schedule_dir}'" \
+    | "${this_dir}/randomize_schedule"
 done
