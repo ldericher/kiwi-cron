@@ -5,29 +5,26 @@ cs_units="${2}"
 cs_command="${3}"
 
 if [ "${cs_every}" = "1" ]; then
-  cs_every=""
+  cs_every="*"
 else
-  cs_every="/${cs_every}"
+  cs_every="*/${cs_every}"
 fi
-
-# generate valid random schedule values
-# generally, "nighttime" and "weekend" will be preferred.
 
 case "${cs_units}" in
   minute)
-    echo "*${cs_every} * * * * ${cs_command}" 
+    echo "${cs_every} * * * * ${cs_command}" 
     ;;
   hour)
-    echo "R *${cs_every} * * * ${cs_command}" 
+    echo "R ${cs_every} * * * ${cs_command}" 
     ;;
   day)
-    echo "R R *${cs_every} * * ${cs_command}" 
+    echo "R R ${cs_every} * * ${cs_command}" 
     ;;
   week)
     echo "R R * * R ${cs_command}" 
     ;;
   month)
-    echo "R R R *${cs_every} * ${cs_command}" 
+    echo "R R R ${cs_every} * ${cs_command}" 
     ;;
   year)
     echo "R R R R * ${cs_command}" 
