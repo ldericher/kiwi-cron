@@ -8,7 +8,7 @@ read -r rs_minute rs_hour rs_day rs_month rs_weekday rs_command
   rs_minute=$(( RANDOM % 60 ))
 
 [ "${rs_hour}" = "R" ] && \
-  rs_hour=$(( (21 + RANDOM % 7) % 24 ))   # prefer nighttime
+  rs_hour=$(( (21 + RANDOM % 6) % 24 ))   # prefer nighttime
   # rs_hour=$(( RANDOM % 24 ))            # don't prefer nighttime
 
 [ "${rs_day}" = "R" ] && \
