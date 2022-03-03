@@ -4,7 +4,7 @@
 
 > `kiwi` - simple, consistent, powerful
 
-Simple cron-jobs  for [`kiwi-scp`](https://github.com/yavook/kiwi-scp)
+Simple cron-jobs  for [`kiwi-scp`](https://github.com/yavook/kiwi-scp).  Also [on Docker Hub](https://hub.docker.com/r/yavook/kiwi-cron).
 
 ## Quick start
 
